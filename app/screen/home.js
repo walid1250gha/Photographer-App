@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data); // ตรวจสอบว่า API ส่งค่าอะไรกลับมา
+        // console.log(data); // ตรวจสอบว่า API ส่งค่าอะไรกลับมา
 
         if (data.status === "ok") {
           setImageUri(data.image_url); // เก็บ URL ของรูปภาพ
