@@ -18,7 +18,7 @@ const Detail = ({ route }) => {
         <Text>{id}</Text>
       ) : (
         // ถ้าไม่มี id ให้แสดงข้อความเตือน
-        <Text>No ID found in params</Text>
+        <Text>No ID found in pdasdasdasdasdasdarams</Text>
       )}
 
       {/* ทดสอบการแสดงผลแบบอื่น */}
