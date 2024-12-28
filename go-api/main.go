@@ -12,38 +12,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/gorm"
 )
-
-type Register struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
-	Fullname string `json:"fullname" binding:"required"`
-	Lastname string `json:"lastname" binding:"required"`
-	Email    string `json:"email" binding:"required"`
-}
-
-type User struct {
-	gorm.Model
-	Username string
-	Password string
-	Fullname string
-	Lastname string
-	Email    string
-}
-
-type Image struct {
-	gorm.Model
-	Post_ID int
-	Img_url string
-}
-
-type Post struct {
-	gorm.Model
-	Post_ID string
-	User_ID string
-	Detail  string
-}
 
 func main() {
 	err := godotenv.Load(".env")

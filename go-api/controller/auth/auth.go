@@ -12,15 +12,6 @@ import (
 
 var hmacSampleSecret []byte
 
-type RegisterBody struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
-	Fullname string `json:"fullname" binding:"required"`
-	Lastname string `json:"lastname" binding:"required"`
-	Email    string `json:"email" binding:"required"`
-	Role     string `json:"role"`
-}
-
 func Register(c *gin.Context) {
 	var json RegisterBody
 	if err := c.ShouldBindJSON(&json); err != nil {
@@ -59,11 +50,6 @@ func Register(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{"status": "error", "message": "User Create Failed"})
 	}
-}
-
-type LoginBody struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
 }
 
 func Login(c *gin.Context) {
