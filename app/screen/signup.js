@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ActivityIndicator, Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, Animated } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
+import app_var from './public';
 
 export default function LoginForm({ navigation }) {
     const [username, setUsername] = useState("");
@@ -65,7 +66,7 @@ export default function LoginForm({ navigation }) {
           redirect: "follow"
         };
         
-        fetch("http://192.168.1.2:8080/register", requestOptions)
+        fetch("http://"+ app_var.api_host +"/register", requestOptions)
         .then((response) => response.json())
         .then((result) => {
             console.log(result);

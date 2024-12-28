@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome"; // นำเข้าไอคอนจาก FontAwesome
+import app_var from './public';
 
 const Profile = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -29,7 +30,7 @@ const Profile = ({ navigation }) => {
       }
 
       const response = await fetch(
-        "http://192.168.1.2:8080/users/profile_imge",
+        "http://"+ app_var.api_host +"/users/profile_imge",
         {
           method: "GET",
           headers: {
@@ -64,7 +65,7 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://192.168.1.2:8080/users/profile", {
+      const response = await fetch("http://"+ app_var.api_host +"/users/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +95,7 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://192.168.1.2:8080/users/readall", {
+      const response = await fetch("http://"+ app_var.api_host +"/users/readall", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import Checkbox from 'expo-checkbox';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import app_var from './public';
 
 export default function LoginForm({ navigation }) {
     const navigate = useNavigation()
@@ -20,6 +21,7 @@ export default function LoginForm({ navigation }) {
     const scaleValue = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
+        // console.log(app_var.api_host)
         if (loading) {
             Animated.loop(
                 Animated.sequence([ 
@@ -50,7 +52,7 @@ export default function LoginForm({ navigation }) {
 
     // ปรับฟังก์ชัน handleSubmit ให้รับค่าจาก email และ password โดยตรง
    const handleSubmit = async () => {
-    const response = await fetch('http://192.168.1.2:8080/login', {
+    const response = await fetch('http://'+ app_var.api_host +'/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
