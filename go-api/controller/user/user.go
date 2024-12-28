@@ -4,13 +4,14 @@ import (
 	"changpab/jwt-api/orm"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-var imageHost = "http://192.168.1.4:8080/get_image/"
-
 func PGAll(c *gin.Context) {
+	device_host := os.Getenv("DEVICE_HOST")
+	var imageHost = "http://" + device_host + ":8080/get_image/"
 	var users []orm.User
 	// orm.Db.Where("Role = ?", "PG").Find(&users)
 	orm.Db.Find(&users, "Role = ?", "PG")
@@ -29,6 +30,8 @@ func Profile(c *gin.Context) {
 }
 
 func Profile_Img(c *gin.Context) {
+	device_host := os.Getenv("DEVICE_HOST")
+	var imageHost = "http://" + device_host + ":8080/get_image/"
 	userId := c.MustGet("userId").(float64)
 	var user orm.User
 	orm.Db.First(&user, userId)

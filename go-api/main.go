@@ -7,6 +7,7 @@ import (
 	_ "changpab/jwt-api/middleware"
 	"changpab/jwt-api/orm"
 	"fmt"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -68,5 +69,7 @@ func main() {
 	authorized.GET("/upload_imageprofile", UserController.Uploadimage_profile)
 	authorized.GET("/profile_imge", UserController.Profile_Img)
 
-	r.Run("192.168.1.2:8080")
+	device_host := os.Getenv("DEVICE_HOST")
+
+	r.Run(device_host + ":8080")
 }
