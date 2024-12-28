@@ -41,11 +41,6 @@ func Profile_Img(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "ok", "image_url": imageURL})
 }
 
-type ImageBody struct {
-	User_ID int    `json:"user_id" binding:"required"`
-	Img_url string `json:"img_url" binding:"required"`
-}
-
 func Uploadimage(c *gin.Context) {
 	userId := c.MustGet("userId").(float64)
 
