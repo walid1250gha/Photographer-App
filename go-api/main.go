@@ -32,11 +32,10 @@ func main() {
 	r.POST("/login", AuthController.Login)
 
 	authorized := r.Group("/users", middleware.JWTAuthen())
-	authorized.GET("/readall", UserController.PGAll)
-	authorized.GET("/profile", UserController.Profile)
-	authorized.GET("/upload_imagepost", UserController.Uploadimage)
-	authorized.GET("/upload_imageprofile", UserController.Uploadimage_profile)
-	authorized.GET("/profile_imge", UserController.Profile_Img)
+	authorized.GET("/get_all_user", UserController.GetAllUser)
+	authorized.GET("/get_user_info", UserController.GetUserInfo)
+	authorized.GET("/upload_image_post", UserController.UploadImagePost)
+	authorized.GET("/upload_image_profile", UserController.UploadImageProfile)
 
 	device_host := os.Getenv("DEVICE_HOST")
 

@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func PGAll(c *gin.Context) {
+func GetAllUser(c *gin.Context) {
 	device_host := os.Getenv("DEVICE_HOST")
 	var imageHost = "http://" + device_host + ":8080/get_image/"
 	var users []orm.User
@@ -22,26 +22,17 @@ func PGAll(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "ok", "message": "User Read Success", "userId": users})
 }
 
-func Profile(c *gin.Context) {
+func GetUserInfo(c *gin.Context) {
 	userId := c.MustGet("userId").(float64)
+	device_host := os.Getenv("DEVICE_HOST")
+	var imageHost = "http://" + device_host + ":8080/get_image/"
 	var user orm.User
 	orm.Db.First(&user, userId)
+	user.Img_profile = fmt.Sprintf(imageHost+"%s", user.Img_profile)
 	c.JSON(http.StatusOK, gin.H{"status": "ok", "message": "User Read Success", "userId": user})
 }
 
-func Profile_Img(c *gin.Context) {
-	device_host := os.Getenv("DEVICE_HOST")
-	var imageHost = "http://" + device_host + ":8080/get_image/"
-	userId := c.MustGet("userId").(float64)
-	var user orm.User
-	orm.Db.First(&user, userId)
-	fmt.Println(user.Img_profile)
-	fmt.Println(userId)
-	imageURL := fmt.Sprintf(imageHost+"%s", user.Img_profile)
-	c.JSON(http.StatusOK, gin.H{"status": "ok", "image_url": imageURL})
-}
-
-func Uploadimage(c *gin.Context) {
+func UploadImagePost(c *gin.Context) {
 	userId := c.MustGet("userId").(float64)
 
 	// รับไฟล์จาก form-data
@@ -82,7 +73,7 @@ func Uploadimage(c *gin.Context) {
 	})
 }
 
-func Uploadimage_profile(c *gin.Context) {
+func UploadImageProfile(c *gin.Context) {
 	userId := c.MustGet("userId").(float64)
 
 	// รับไฟล์จาก form-data

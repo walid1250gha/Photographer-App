@@ -19,43 +19,7 @@ const Profile = ({ navigation }) => {
   const [userAll, setUserAll] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [imageUri, setImageUri] = useState(null); // สถานะสำหรับเก็บ URI ของรูปภาพ
 
-  const fetchProfileImage = async () => {
-    try {
-      const token = await AsyncStorage.getItem("@token");
-      if (!token) {
-        alert("Token not found. Please log in again.");
-        return;
-      }
-
-      const response = await fetch(
-        "http://"+ app_var.api_host +"/users/profile_imge",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`, // ใส่ token ใน headers
-          },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        // console.log(data); // ตรวจสอบว่า API ส่งค่าอะไรกลับมา
-
-        if (data.status === "ok") {
-          setImageUri(data.image_url); // เก็บ URL ของรูปภาพ
-        } else {
-          alert("Failed to fetch profile image");
-        }
-      } else {
-        alert("Failed to fetch profile image");
-      }
-    } catch (error) {
-      console.error("Error fetching profile image:", error);
-      alert("Error fetching profile image");
-    }
-  };
 
   const fetchUser = async () => {
     try {
@@ -65,7 +29,7 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/profile", {
+      const response = await fetch("http://"+ app_var.api_host +"/users/get_user_info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +59,7 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/readall", {
+      const response = await fetch("http://"+ app_var.api_host +"/users/get_all_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +85,6 @@ const Profile = ({ navigation }) => {
   useEffect(() => {
     fetchUser();
     fetchAllUser();
-    fetchProfileImage();
   }, []);
 
   const toggleDropdown = () => {
@@ -151,7 +114,7 @@ const Profile = ({ navigation }) => {
             {/* กดที่รูปโปรไฟล์เพื่อแสดง dropdown */}
             <TouchableOpacity onPress={toggleDropdown}>
               <Image
-                source={{ uri: imageUri || "https://via.placeholder.com/150" }}
+                source={{ uri: user.Img_profile || "https://via.placeholder.com/150" }}
                 style={styles.profileImage}
               />
             </TouchableOpacity>
