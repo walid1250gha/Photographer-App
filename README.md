@@ -1,5 +1,28 @@
 # CHANGPAB 
 
+## How to install ```./app``` (App) module
+
+##### 1. go to app path
+```
+cd app
+```
+
+##### 2. install modul
+```
+app>npm install --force
+```
+<b>wait install successfully</b>
+
+
+##### 3. run recheck module
+```
+app> npm audit --force
+```
+<b>successfully
+
+
+
+## API
 |Description|Api Path|Method|
 |-----------|--------|------|
 |สมัครสมาชิก|api_host/register|POST|
