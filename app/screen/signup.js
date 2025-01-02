@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ActivityIndicator, Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, Animated } from 'react-native';
+import { ActivityIndicator, Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, Animated, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import app_var from './public';
@@ -50,47 +50,47 @@ export default function LoginForm({ navigation }) {
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        
+
         const raw = JSON.stringify({
-          "username": username,
-          "password": password,
-          "fullname": firstname,
-          "lastname": lastname,
-          "email": email
+            "username": username,
+            "password": password,
+            "fullname": firstname,
+            "lastname": lastname,
+            "email": email
         });
-        
+
         const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow"
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
         };
-        
-        fetch("http://"+ app_var.api_host +"/register", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            console.log(result);
-            if (result.status === 'ok') {
-                Alert.alert(
-                    "Success",
-                    result.message, // ใช้ข้อความที่ได้จากการ login
-                    [{ 
-                        text: "OK",
-                        onPress: () => {
-                            // เมื่อผู้ใช้กด "OK" ใน Alert ให้ทำการนำทางไปหน้า profile
-                            navigation.navigate('login'); // แก้ไขเป็นชื่อหน้าที่ต้องการ
-                        }
-                    }]
-                );
-            } else {
-                Alert.alert(
-                    "Error",
-                    result.message, // ใช้ข้อความที่ได้จากการ login
-                    [{ text: "OK" }]
-                );
-            }
-        })
-        .catch((error) => console.error(error));
+
+        fetch("http://" + app_var.api_host + "/register", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                if (result.status === 'ok') {
+                    Alert.alert(
+                        "Success",
+                        result.message, // ใช้ข้อความที่ได้จากการ login
+                        [{
+                            text: "OK",
+                            onPress: () => {
+                                // เมื่อผู้ใช้กด "OK" ใน Alert ให้ทำการนำทางไปหน้า profile
+                                navigation.navigate('login'); // แก้ไขเป็นชื่อหน้าที่ต้องการ
+                            }
+                        }]
+                    );
+                } else {
+                    Alert.alert(
+                        "Error",
+                        result.message, // ใช้ข้อความที่ได้จากการ login
+                        [{ text: "OK" }]
+                    );
+                }
+            })
+            .catch((error) => console.error(error));
     };
 
     if (!fontsLoaded) {
@@ -98,91 +98,93 @@ export default function LoginForm({ navigation }) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            {loading ? (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color="#063B52" />
-                </View>
-            ) : (
-                <>
-                    <LinearGradient
-                        colors={['#063B52', '#063B52']}
-                        style={styles.logo}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0.5, y: 0.5 }}
-                        locations={[0, 1]}
-                    >
-                        <Animated.Image
-                            source={require('../assets/camera1.png')}
-                            style={[styles.image, { transform: [{ scale: scaleValue }] }]}
-                        />
-                        <Text style={styles.detail}>Ready to find a photographer?</Text>
-                        <Text style={styles.detail}>Sign up and begib your</Text>
-                        <Text style={styles.detail}>advebture!</Text>
-                    </LinearGradient>
-
-                    <View style={styles.inputView}>
-                        <Text style={styles.intoinput}>First name</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter your first name"
-                            value={firstname}
-                            onChangeText={setFirstname}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                        />
-                        <Text style={styles.intoinput}>Last name</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter your username"
-                            value={lastname}
-                            onChangeText={setLastname}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                        />
-                        <Text style={styles.intoinput}>E-mail</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter your username"
-                            value={email}
-                            onChangeText={setemail}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                        />
-                        <Text style={styles.intoinput}>Password</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Type a password"
-                            secureTextEntry
-                            value={password}
-                            onChangeText={setPassword}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                        />
-                        <Text style={styles.intoinput}>username</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="username"
-                            secureTextEntry
-                            value={username}
-                            onChangeText={setUsername}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                        />
+        <ScrollView>
+            <SafeAreaView style={styles.container}>
+                {loading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#063B52" />
                     </View>
-                    <View style={styles.buttonView}>
-                        <Pressable style={styles.button} onPress={handleSubmit}>
-                            <Text style={styles.buttonText}>Next</Text>
-                        </Pressable>
-                        
-                    
-                    </View>
+                ) : (
+                    <>
+                        <LinearGradient
+                            colors={['#063B52', '#063B52']}
+                            style={styles.logo}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0.5, y: 0.5 }}
+                            locations={[0, 1]}
+                        >
+                            <Animated.Image
+                                source={require('../assets/camera1.png')}
+                                style={[styles.image, { transform: [{ scale: scaleValue }] }]}
+                            />
+                            <Text style={styles.detail}>Ready to find a photographer?</Text>
+                            <Text style={styles.detail}>Sign up and begib your</Text>
+                            <Text style={styles.detail}>advebture!</Text>
+                        </LinearGradient>
 
-                    <Text style={styles.footerText}>Already have an account? <Text style={styles.signup} onPress={onPress}>Login</Text>
-                    </Text>
-                </>
-            )}
-        </SafeAreaView>
+                        <View style={styles.inputView}>
+                            <Text style={styles.intoinput}>First name</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your first name"
+                                value={firstname}
+                                onChangeText={setFirstname}
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.intoinput}>Last name</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your username"
+                                value={lastname}
+                                onChangeText={setLastname}
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.intoinput}>E-mail</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your username"
+                                value={email}
+                                onChangeText={setemail}
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.intoinput}>Password</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Type a password"
+                                secureTextEntry
+                                value={password}
+                                onChangeText={setPassword}
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.intoinput}>username</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="username"
+                                secureTextEntry
+                                value={username}
+                                onChangeText={setUsername}
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                            />
+                        </View>
+                        <View style={styles.buttonView}>
+                            <Pressable style={styles.button} onPress={handleSubmit}>
+                                <Text style={styles.buttonText}>Next</Text>
+                            </Pressable>
+
+
+                        </View>
+
+                        <Text style={styles.footerText}>Already have an account? <Text style={styles.signup} onPress={onPress}>Login</Text>
+                        </Text>
+                    </>
+                )}
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -286,9 +288,9 @@ const styles = StyleSheet.create({
         marginBottom: 1
     },
     googleButton: {
-        backgroundColor: "white", 
+        backgroundColor: "white",
         height: 45,
-        width: 350, 
+        width: 350,
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
@@ -301,7 +303,7 @@ const styles = StyleSheet.create({
     googleLogo: {
         width: 24,
         height: 24,
-        marginRight: 10, 
+        marginRight: 10,
     },
     googleButtonText: {
         color: "#000000",
