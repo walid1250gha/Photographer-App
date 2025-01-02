@@ -25,6 +25,7 @@ func main() {
 	r := gin.Default()
 
 	// ให้เซิร์ฟเวอร์สามารถเข้าถึงไฟล์ในโฟลเดอร์ ./uploads ได้
+	// ให้เซิร์ฟเวอร์สามารถเข้าถึงไฟล์ในโฟลเดอร์ ./uploads ได้
 	r.Static("/get_image", "./uploads/user_profile") // เพิ่มบรรทัดนี้
 
 	r.Use(cors.Default())
