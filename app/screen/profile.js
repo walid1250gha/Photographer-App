@@ -12,14 +12,13 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome"; // นำเข้าไอคอนจาก FontAwesome
-import app_var from './public';
+import app_var from "./public";
 
 const Profile = ({ navigation }) => {
   const [user, setUser] = useState({});
   const [userAll, setUserAll] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
 
   const fetchUser = async () => {
     try {
@@ -29,13 +28,16 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/get_user_info", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://" + app_var.api_host + "/users/get_user_info",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
       if (data.status === "ok") {
@@ -59,13 +61,16 @@ const Profile = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/get_all_user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://" + app_var.api_host + "/users/get_all_user",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
       if (data.status === "ok") {
@@ -114,7 +119,13 @@ const Profile = ({ navigation }) => {
             {/* กดที่รูปโปรไฟล์เพื่อแสดง dropdown */}
             <TouchableOpacity onPress={toggleDropdown}>
               <Image
-                source={{ uri: user.Img_profile || "https://via.placeholder.com/150" }}
+                source={{
+                  uri:
+                    user.Img_profile &&
+                    user.Img_profile !== "http://192.168.1.4:8080/get_image/"
+                      ? user.Img_profile
+                      : "https://cdn.discordapp.com/attachments/1250077512738799689/1324407457388298260/default.png?ex=67780a10&is=6776b890&hm=13974538c45dd610297e73a4d50291ad662175fc8bc85044201b81725767a7e6&",
+                }}
                 style={styles.profileImage}
               />
             </TouchableOpacity>

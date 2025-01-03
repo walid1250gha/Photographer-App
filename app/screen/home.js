@@ -36,7 +36,6 @@ const Home = ({ navigation }) => {
     }, 1000);
   };
 
-
   const fetchUser = async () => {
     try {
       const token = await AsyncStorage.getItem("@token");
@@ -45,19 +44,20 @@ const Home = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/get_user_info", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://" + app_var.api_host + "/users/get_user_info",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
-      console.log(data);
-
       if (data.status === "ok") {
-        setUser(data.userId); // เก็บข้อมูลผู้ใช้ใน state
+        setUser(data.userId);
       } else {
         alert("Failed to fetch user data");
       }
@@ -77,13 +77,16 @@ const Home = ({ navigation }) => {
         return;
       }
 
-      const response = await fetch("http://"+ app_var.api_host +"/users/get_all_user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://" + app_var.api_host + "/users/get_all_user",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
       if (data.status === "ok") {
@@ -104,13 +107,6 @@ const Home = ({ navigation }) => {
     fetchUser();
     fetchAllUser();
   }, []);
-
-  const photographers = [
-    { id: 1, name: "fauza", image: require("../assets/nopic.jpg") },
-    { id: 2, name: "fullframe", image: require("../assets/nopic.jpg") },
-    { id: 3, name: "hilmee", image: require("../assets/nopic.jpg") },
-    { id: 4, name: "kasut", image: require("../assets/nopic.jpg") },
-  ];
 
   const Profile = ({ id }) => {
     navigation.navigate("Profile", { id: id });
@@ -144,7 +140,8 @@ const Home = ({ navigation }) => {
             <TouchableOpacity onPress={toggleDropdown}>
               <Image
                 source={{
-                  uri: user.Img_profile || "https://via.placeholder.com/150",
+                  uri:
+                    user.Img_profile,
                 }}
                 style={styles.profileImage}
               />
@@ -172,6 +169,12 @@ const Home = ({ navigation }) => {
                       // ลบ token ออกจาก AsyncStorage
                       await AsyncStorage.removeItem("@token");
 
+                      // ตรวจสอบว่า token ถูกลบออกจริง ๆ
+                      const token = await AsyncStorage.getItem("@token");
+                      if (!token) {
+                        console.log("Token removed successfully");
+                      }
+
                       // นำทางไปยังหน้า login
                       navigation.navigate("login");
                     } catch (error) {
@@ -188,7 +191,7 @@ const Home = ({ navigation }) => {
         <View style={styles.card_top}>
           <View style={styles.imageContainer}>
             <ImageBackground
-              source={require("../assets/ddd.jpg")}
+              source={require("../assets/imageContainer.png")}
               style={styles.imageBackground}
               resizeMode="cover"
             >
