@@ -38,11 +38,12 @@ func Register(c *gin.Context) {
 	// Create user
 	encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte(json.Password), 10)
 	user := orm.User{
-		Username: json.Username,
-		Password: string(encryptedPassword),
-		Fullname: json.Fullname,
-		Lastname: json.Lastname,
-		Email:    json.Email,
+		Username:    json.Username,
+		Password:    string(encryptedPassword),
+		Fullname:    json.Fullname,
+		Lastname:    json.Lastname,
+		Email:       json.Email,
+		Img_profile: "default.png",
 	}
 	orm.Db.Create(&user)
 	if user.ID > 0 {
